@@ -20,6 +20,11 @@ limitations under the License.
 #include "GL/gl/include/GLES3/gl32.h"
 #include "absl/strings/str_cat.h"
 
+#define RETURN_IF_EQ(statement, value)      \
+  do {                                      \
+    if ((statement) == value) return value; \
+  } while (false)
+
 #define RETURN_FALSE_IF_GL_ERROR(gl_statement)                        \
   do {                                                                \
     (gl_statement);                                                   \

@@ -56,8 +56,8 @@ cc_test(
     deps = [
         ":egl_offscreen_context",
         ":gl_native_libs",
-        "//testing/base/public:gunit_main",
         "//third_party/GL:GLES3_headers",
+        "@com_google_googletest//:gunit_main",
     ],
 )
 
@@ -67,7 +67,7 @@ cc_library(
     deps = [
         "//third_party/GL:EGL_headers",
         "//third_party/GL:GLES3_headers",
-        "//third_party/absl/strings",
+        "@com_google_absl//absl/strings",
     ],
 )
 
@@ -88,8 +88,9 @@ cc_library(
     deps = [
         ":gl_macros",
         "//third_party/GL:GLES3_headers",
-        "//third_party/absl/types:span",
         "//third_party/tensorflow/core:lib",
+        "@com_google_absl//absl/strings",
+        "@com_google_absl//absl/types:span",
     ],
 )
 
@@ -104,9 +105,9 @@ cc_test(
         ":egl_offscreen_context",
         ":gl_native_libs",
         ":gl_utils",
-        "//testing/base/public:gunit_main",
         "//third_party/GL:GLES3_headers",
-        "//third_party/absl/types:span",
+        "@com_google_absl//absl/types:span",
+        "@com_google_googletest//:gunit_main",
     ],
 )
 
@@ -142,5 +143,30 @@ py_test(
         # google internal package dependency 6
         # google internal package dependency 1,
         "//tensorflow_graphics/util:test_case",
+    ],
+)
+
+cc_library(
+    name = "rasterizer",
+    hdrs = ["rasterizer.h"],
+    deps = [
+        ":gl_utils",
+        "//third_party/tensorflow/core:lib",
+    ],
+)
+
+cc_test(
+    name = "rasterizer_test",
+    srcs = ["tests/rasterizer_test.cc"],
+    tags = [
+        "requires-gpu-sm35",
+    ],
+    deps = [
+        ":egl_offscreen_context",
+        ":gl_native_libs",
+        ":rasterizer",
+        "//third_party/glm",
+        "@com_google_absl//absl/types:span",
+        "@com_google_googletest//:gunit_main",
     ],
 )
